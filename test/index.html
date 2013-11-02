@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>jquery.jmdmbox Test Suite</title>
+	<script src="./jquery.1.9.1.js"></script>
+	<script src="../jquery.jmdmbox.js"></script>
+</head>
+<body id="body">
+	<div class="opener">
+		open
+	</div>
+	<script>
+		$(function(){
+			$(".opener").on('click', function(){
+				console.log(1234);
+				var instance = $('.lightbox').jmdmbox();
+				instance.show();
+			});
+		});
+	</script>
+	<div class="lightbox" style="display:none; width:50px; height:50px; background-color:#fff;">
+		hogehoge
+	</div>
+</body>
+</html>
