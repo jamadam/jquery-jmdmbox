@@ -97,7 +97,7 @@
                 cb(e);
             }
         });
-        this.elem.find('.close').die('click.' + plugname);
+        this.elem.find('.close').off('click.' + plugname);
         return this;
     };
     
