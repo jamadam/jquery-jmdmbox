@@ -45,18 +45,18 @@
     /**
      * show
      */
-    Class.prototype.show = function(speed, cb) {
+    Class.prototype.show = function(speed, cb1, cb2) {
         var obj = this;
         var wrapper = this.elem.wrap('<div></div>').parent(0);
         wrapper.addClass('lightboxContainer');
         wrapper.prepend($('<div class="lightboxMask"></div>'));
         
         wrapper.find('.lightboxMask').on('click.' + plugname, function(){
-            obj.hide();
+            obj.hide(speed, cb2);
         });
         
         wrapper.find('.close').on('click.' + plugname, function(){
-            obj.hide();
+            obj.hide(speed, cb2);
         });
         
         wrapper.find('.lightboxMask').css(this.params['mask-style']);
@@ -72,7 +72,7 @@
             'left': '50%'
         });
         
-        this.elem.fadeIn(speed, cb);
+        this.elem.fadeIn(speed, cb1);
         
         this.elem.on('click.' + plugname, function(e) {
             e.stopPropagation();
@@ -94,7 +94,7 @@
                 $(this).off('resize.' + plugname);
             }
             if (cb != undefined) {
-                cb(e);
+                cb.call(this, e);
             }
         });
         this.elem.find('.close').off('click.' + plugname);

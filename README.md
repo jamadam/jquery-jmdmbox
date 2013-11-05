@@ -4,8 +4,8 @@ jquery-jmdmbox - Lightbox
 ## SYNOPSIS
 
     var instance = $('#target').jmdmbox();
-    instance.show();
-    instance.hide();
+    instance.show(speed, callback1, callback2);
+    instance.hide(speed, callback2);
     instance.centering();
 
 [https://github.com/jamadam/jquery-jmdmbox]
