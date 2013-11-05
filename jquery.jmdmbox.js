@@ -35,8 +35,8 @@
      */
     Class.prototype.centering = function() {
         this.elem.css({
-            'marginTop': (-1 * obj.get(0).clientHeight / 2) + 'px',
-            'marginLeft': (-1 * obj.get(0).clientWidth / 2) + 'px'
+            'marginTop': (-1 * this.elem.get(0).clientHeight / 2) + 'px',
+            'marginLeft': (-1 * this.elem.get(0).clientWidth / 2) + 'px'
         });
         
         return this;
