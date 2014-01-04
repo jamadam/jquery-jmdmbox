@@ -63,7 +63,7 @@
         
         wrapper.css({
             'position': 'relative',
-            'zIndex': this.params['z-index'],
+            'zIndex': this.params['z-index']
         });
         
         this.elem.css({
