@@ -35,10 +35,23 @@
      * Center the box
      */
     Class.prototype.centering = function() {
-        this.elem.css({
-            'marginTop': (-1 * this.elem.get(0).clientHeight / 2) + 'px',
-            'marginLeft': (-1 * this.elem.get(0).clientWidth / 2) + 'px'
-        });
+        
+        var ltop, lleft;
+        
+        while (1) {
+            var top = -1 * this.elem.get(0).clientHeight / 2;
+            var left = -1 * this.elem.get(0).clientWidth / 2;
+            this.elem.css({
+                'marginTop': top + 'px',
+                'marginLeft': left + 'px'
+            });
+            if (ltop !== top && lleft !== left) {
+                ltop = top;
+                lleft = left;
+                continue;
+            }
+            break;
+        }
         
         return this;
     }
