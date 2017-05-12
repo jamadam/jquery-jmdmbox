@@ -1,5 +1,5 @@
 /*!
- * jquery.jmdmbox v0.02
+ * jquery.jmdmbox v0.03 beta
  *
  * SYNOPSIS
  *
@@ -28,6 +28,7 @@
         this.elem = elem;
         this.elem.data(plugname, this);
         this.params = params;
+        this.init();
     }
     
     /**
@@ -43,43 +44,40 @@
     }
     
     /**
-     * show
+     * init
      */
-    Class.prototype.show = function(speed, cb1, cb2) {
-        var obj = this;
-        var wrapper = this.elem.wrap('<div></div>').parent(0);
-        wrapper.addClass('lightboxContainer');
-        wrapper.prepend($('<div class="lightboxMask"></div>'));
-        
-        wrapper.find('.lightboxMask').on('click.' + plugname, function(){
-            obj.hide(speed, cb2);
-        });
-        
-        wrapper.find('.close').on('click.' + plugname, function(){
-            obj.hide(speed, cb2);
-        });
-        
-        wrapper.find('.lightboxMask').css(this.params['mask-style']);
-        
-        wrapper.css({
+    Class.prototype.init = function() {
+        var wrapper = this.wrapper =
+            this.elem.wrap('<div/>', {class:'lightboxContainer'}).parent(0);
+        var mask = $('<div/>', {class:'close lightboxMask'});
+        mask.css(this.params['mask-style']);
+        wrapper.prepend(mask).hide().css({
             'position': 'relative',
             'zIndex': this.params['z-index']
         });
-        
-        this.elem.css({
+        this.elem.show().css({
             'position' : 'fixed',
             'top': '50%',
             'left': '50%'
         });
-        
-        this.elem.fadeIn(speed, cb1);
         
         this.elem.on('click.' + plugname, function(e) {
             e.stopPropagation();
         });
         
         this.centering();
-        
+        return this;
+    }
+    
+    /**
+     * show
+     */
+    Class.prototype.show = function(speed, cb1, cb2) {
+        this.wrapper.fadeIn(speed, cb1);
+        var obj = this;
+        this.wrapper.find('.close').on('click.' + plugname, function(){
+            obj.hide(speed, cb2);
+        });
         return this;
     };
     
@@ -87,17 +85,23 @@
      * hide
      */
     Class.prototype.hide = function(speed, cb) {
-        this.elem.fadeOut(speed, function(e) {
-            if ($(this).parent(0).hasClass('lightboxContainer')) {
-                $(this).prev().remove();
-                $(this).unwrap();
-                $(this).off('resize.' + plugname);
-            }
+        this.wrapper.fadeOut(speed, function(e) {
             if (cb != undefined) {
                 cb.call(this, e);
             }
         });
-        this.elem.find('.close').off('click.' + plugname);
+        this.wrapper.find('.close').off('click.' + plugname);
+        return this;
+    };
+    
+    /**
+     * destroy
+     */
+    Class.prototype.destroy = function(speed) {
+        if ($(this).parent(0).hasClass('lightboxContainer')) {
+            $(this).prev().remove();
+            $(this).unwrap();
+        }
         return this;
     };
     
